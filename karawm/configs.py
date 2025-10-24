@@ -46,3 +46,4 @@ def ensure_model_files():
 
 # 실행 시 자동 확인
 ensure_model_files()
+DEFAULT_WATERMARK_REMOVE_MODEL = "big-lama"
