@@ -19,11 +19,11 @@ MODEL_URLS = {
     "big-lama.pt": "https://github.com/kimjongin0325-cyber/KaraVision/releases/download/v1.0/big-lama.pt",
 }
 
-# 자동 다운로드 함수
+
 def ensure_model_files():
     import requests
 
-    # YOLO 모델
+    # YOLO 모델 다운로드
     if not WATER_MARK_DETECT_YOLO_WEIGHTS.exists():
         print(f"📥 Downloading best.pt from GitHub...")
         with requests.get(MODEL_URLS["best.pt"], stream=True) as r:
@@ -33,7 +33,7 @@ def ensure_model_files():
                     f.write(chunk)
         print("✅ best.pt downloaded.")
 
-    # LaMa 모델
+    # LaMa 모델 다운로드
     if not LAMA_WEIGHTS_PATH.exists():
         print(f"📥 Downloading big-lama.pt from GitHub...")
         LAMA_WEIGHTS_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -44,6 +44,9 @@ def ensure_model_files():
                     f.write(chunk)
         print("✅ big-lama.pt downloaded.")
 
+
 # 실행 시 자동 확인
 ensure_model_files()
+
+# 기존 코드 호환성
 DEFAULT_WATERMARK_REMOVE_MODEL = "big-lama"
