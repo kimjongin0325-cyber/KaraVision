@@ -24,7 +24,7 @@ class WaterMarkCleaner:
             logger.info(
                 f"{self.model} not found in {DEFAULT_MODEL_DIR}, try to downloading"
             )
-            cli_download_model(self.model)
+           # cli_download_model(self.model)
         self.model_manager = ModelManager(name=self.model, device=self.device)
         self.inpaint_request = InpaintRequest()
 
