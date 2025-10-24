@@ -4,7 +4,7 @@ from pathlib import Path
 
 import streamlit as st
 
-from sorawm.core import SoraWM
+from karawm.core import karawm
 
 
 def main():
@@ -15,10 +15,10 @@ def main():
     st.title("🎬 Sora Watermark Cleaner")
     st.markdown("Remove watermarks from Sora-generated videos with ease")
 
-    # Initialize SoraWM
+    # Initialize karawm
     if "sora_wm" not in st.session_state:
         with st.spinner("Loading AI models..."):
-            st.session_state.sora_wm = SoraWM()
+            st.session_state.sora_wm = karawm()
 
     st.markdown("---")
 

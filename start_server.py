@@ -4,8 +4,8 @@ import fire
 import uvicorn
 from loguru import logger
 
-from sorawm.configs import LOGS_PATH
-from sorawm.server.app import init_app
+from karawm.configs import LOGS_PATH
+from karawm.server.app import init_app
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--host", default="0.0.0.0", help="host")

@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 from tqdm import tqdm
 
-from sorawm.configs import ROOT
+from karawm.configs import ROOT
 
 videos_dir = ROOT / "videos"
 datasets_dir = ROOT / "datasets"
