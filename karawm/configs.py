@@ -49,4 +49,4 @@ def ensure_model_files():
 ensure_model_files()
 
 # 기존 코드 호환성
-DEFAULT_WATERMARK_REMOVE_MODEL = "big-lama"
+DEFAULT_WATERMARK_REMOVE_MODEL = "lama"
