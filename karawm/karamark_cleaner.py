@@ -11,7 +11,7 @@ from karawm.iopaint.download import scan_models
 from karawm.iopaint.model_manager import ModelManager
 from karawm.iopaint.schema import InpaintRequest
 
-from karawm.karamark_detector import KaramarkDetector
+from karawm.karamark_detector import KaramarkDetector  # ✅ KaramarkDetector 일관
 
 
 class _SimpleTracker:
@@ -157,7 +157,7 @@ def _bbox_to_mask(h: int, w: int,
     return mask
 
 
-class KaramarkCleaner:
+class KaramarkCleaner:  # ✅ KaramarkCleaner 일관
     def __init__(self, yolo_conf: float = 0.10,
                  feather: int = 14,
                  device: str | None = None):
@@ -174,7 +174,7 @@ class KaramarkCleaner:
                                           device=self.device)
         self.inpaint_req = InpaintRequest()
 
-        self.detector = KaramarkDetector(conf_thres=yolo_conf)
+        self.detector = KaramarkDetector(conf=yolo_conf)  # ✅ conf_thres → conf (detector.py와 일치)
         self.tracker = _SimpleTracker()
         self.fallback = _ShapeFallback()
         self.feather = feather
