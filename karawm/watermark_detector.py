@@ -13,10 +13,10 @@ from karawm.utils.video_utils import VideoLoader
 class KaramkDetector:
     def __init__(self, conf=0.25, iou=0.45, device=None):
         download_detector_weights()
-        logger.debug("Begin to load yolo water mark detet model.")
+        logger.debug("Begin to load yolo kara mark detet model.")
         
         self.model = YOLO(WATER_MARK_DETECT_YOLO_WEIGHTS)
-        logger.debug("Yolo water mark detet model loaded.")
+        logger.debug("Yolo kara mark detet model loaded.")
 
         # ✅ Confidence & IoU 설정
         self.model.conf = conf
