@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import numpy as np
+import torch  # ✅ 추가: torch import (cuda.is_available()용)
 from loguru import logger
 from ultralytics import YOLO
 
@@ -8,15 +9,20 @@ from karawm.configs import KARA_MARK_DETECT_YOLO_WEIGHTS
 from karawm.utils.download_utils import download_detector_weights
 from karawm.utils.video_utils import VideoLoader
 
-# based on the kara tempalte to detect the whole, and then got the icon part area.
+# based on the kara template to detect the whole, and then got the icon part area.
 
 class KaramarkDetector:
     def __init__(self, conf=0.25, iou=0.45, device=None):
         download_detector_weights()
-        logger.debug("Begin to load yolo kara mark detet model.")
+        logger.debug("Begin to load yolo kara mark detect model.")  # ✅ detet → detect
+        
+        # ✅ 보안 패치: PyTorch weights_only=True 해결
+        import torch.serialization
+        from ultralytics.nn.tasks import DetectionModel
+        torch.serialization.add_safe_globals([DetectionModel])
         
         self.model = YOLO(KARA_MARK_DETECT_YOLO_WEIGHTS)
-        logger.debug("Yolo kara mark detet model loaded.")
+        logger.debug("Yolo kara mark detect model loaded.")  # ✅ detet → detect
 
         # ✅ Confidence & IoU 설정
         self.model.conf = conf
@@ -30,7 +36,6 @@ class KaramarkDetector:
 
         self.model.to(self.device)
         logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={self.device}")
-
 
         self.model.eval()
 
@@ -215,7 +220,7 @@ if __name__ == "__main__":
 
     print(f"\n=== 检测统计 ===")
     print(f"总帧数: {total_frames}")
-    print(f"检测到水印: {detected_frames} 帧")
+    print(f"检测到KaraMark: {detected_frames} 帧")  # ✅ 水印 → KaraMark (리브랜딩 완성)
     print(f"检测率: {detected_frames/total_frames*100:.2f}%")
 
     cv2.destroyAllWindows()
