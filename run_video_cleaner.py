@@ -13,12 +13,9 @@ def main(input_path, output_path):
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    writer = cv2.VideoWriter(
-        str(output_path),
-        cv2.VideoWriter_fourcc(*"avc1"),
-        fps,
-        (w, h),
-    )
+    # ✅ Colab에서 안정적인 MJPG + AVI 조합
+    fourcc = cv2.VideoWriter_fourcc(*"MJPG")
+    writer = cv2.VideoWriter(str(output_path), fourcc, fps, (w, h))
 
     frame_idx = 0
     print("[INFO] 처리 시작...")
@@ -28,19 +25,14 @@ def main(input_path, output_path):
         if not ret:
             break
 
-        # 👉 물리적으로는 탐지 + 제거 + 인페인트
         result = cleaner.clean_frame(frame)
         writer.write(result)
-
         frame_idx += 1
-        cv2.imshow("Preview", result)
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        # ✅ Colab은 GUI 미지원 → imshow 제거
 
     writer.release()
     cap.release()
-    cv2.destroyAllWindows()
     print(f"[완료] 저장: {output_path}")
 
 
