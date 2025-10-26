@@ -13,7 +13,7 @@ def main():
     )
 
     st.title("🎬 Kara Karamk Cleaner")
-    st.markdown("Remove karamks from Kara-generated videos with ease")
+    st.markdown("Remove karamarks from Kara-generated videos with ease")
 
     # Initialize karawm
     if "kara_wm" not in st.session_state:
@@ -26,7 +26,7 @@ def main():
     uploaded_file = st.file_uploader(
         "Upload your video",
         type=["mp4", "avi", "mov", "mkv"],
-        help="Select a video file to remove karamks",
+        help="Select a video file to remove karamarks",
     )
 
     if uploaded_file is not None:
@@ -55,13 +55,13 @@ def main():
                     def update_progress(progress: int):
                         progress_bar.progress(progress / 100)
                         if progress < 50:
-                            status_text.text(f"🔍 Detecting karamks... {progress}%")
+                            status_text.text(f"🔍 Detecting karamarks... {progress}%")
                         elif progress < 95:
-                            status_text.text(f"🧹 Removing karamks... {progress}%")
+                            status_text.text(f"🧹 Removing karamarks... {progress}%")
                         else:
                             status_text.text(f"🎵 Merging audio... {progress}%")
                     
-                    # Run the karamk removal with progress callback
+                    # Run the karamark removal with progress callback
                     st.session_state.kara_wm.run(
                         input_path, output_path, progress_callback=update_progress
                     )

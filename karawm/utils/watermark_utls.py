@@ -8,7 +8,7 @@ tmpl_gray = cv2.cvtColor(tmpl, cv2.COLOR_BGR2GRAY)
 h_tmpl, w_tmpl = tmpl_gray.shape
 
 
-def detect_karamk(
+def detect_karamark(
     img: np.array,
     region_fraction: float = 0.25,
     threshold: float = 0.5,

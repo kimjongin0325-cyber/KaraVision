@@ -84,7 +84,7 @@ def test_runway_powerpaint_v2(device, sampler):
         cfg = get_config(
             strategy=HDStrategy.ORIGINAL,
             prompt=data["prompt"],
-            negative_prompt="out of frame, lowres, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, disfigured, gross proportions, malformed limbs, karamk, signature",
+            negative_prompt="out of frame, lowres, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, disfigured, gross proportions, malformed limbs, karamark, signature",
             sd_steps=sd_steps,
             sd_guidance_scale=data["scale"],
             enable_powerpaint_v2=True,

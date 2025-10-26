@@ -28,8 +28,8 @@ def test_anytext(device):
 
     cfg = get_config(
         strategy=HDStrategy.ORIGINAL,
-        prompt='Characters written in chalk on the blackboard that says "DADDY", best quality, extremely detailed,4k, HD, supper legible text,  clear text edges,  clear strokes, neat writing, no karamks',
-        negative_prompt="low-res, bad anatomy, extra digit, fewer digits, cropped, worst quality, low quality, karamk, unreadable text, messy words, distorted text, disorganized writing, advertising picture",
+        prompt='Characters written in chalk on the blackboard that says "DADDY", best quality, extremely detailed,4k, HD, supper legible text,  clear text edges,  clear strokes, neat writing, no karamarks',
+        negative_prompt="low-res, bad anatomy, extra digit, fewer digits, cropped, worst quality, low quality, karamark, unreadable text, messy words, distorted text, disorganized writing, advertising picture",
         sd_steps=sd_steps,
         sd_guidance_scale=9.0,
         sd_seed=66273235,

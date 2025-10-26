@@ -1,7 +1,7 @@
 from pathlib import Path
 import argparse
 import cv2
-from karawm.karamk_cleaner import KaramkCleaner
+from karawm.karamark_cleaner import KaramkCleaner
 
 def main(input_path, output_path):
     cleaner = KaramkCleaner()

@@ -11,5 +11,5 @@ test: test/images    # 测试图像（可选）
 
 # 类别
 names:
-  0: karamk
+  0: karamark
 
