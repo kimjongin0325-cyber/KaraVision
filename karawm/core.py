@@ -137,6 +137,6 @@ if __name__ == "__main__":
     input_video_path = Path(
         "resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4"
     )
-    output_video_path = Path("outputs/sora_karamk_removed.mp4")
-    sora_wm = karawm()
-    sora_wm.run(input_video_path, output_video_path)
+    output_video_path = Path("outputs/kara_karamk_removed.mp4")
+    kara_wm = karawm()
+    kara_wm.run(input_video_path, output_video_path)

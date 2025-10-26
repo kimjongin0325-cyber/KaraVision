@@ -16,9 +16,9 @@ def main():
     st.markdown("Remove karamks from Sora-generated videos with ease")
 
     # Initialize karawm
-    if "sora_wm" not in st.session_state:
+    if "kara_wm" not in st.session_state:
         with st.spinner("Loading AI models..."):
-            st.session_state.sora_wm = karawm()
+            st.session_state.kara_wm = karawm()
 
     st.markdown("---")
 
@@ -62,7 +62,7 @@ def main():
                             status_text.text(f"🎵 Merging audio... {progress}%")
                     
                     # Run the karamk removal with progress callback
-                    st.session_state.sora_wm.run(
+                    st.session_state.kara_wm.run(
                         input_path, output_path, progress_callback=update_progress
                     )
                     

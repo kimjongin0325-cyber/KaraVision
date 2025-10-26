@@ -6,7 +6,7 @@ from ultralytics import YOLO
 from karawm.configs import WATER_MARK_DETECT_YOLO_WEIGHTS
 from karawm.utils.video_utils import VideoLoader
 
-# based on the sora tempalte to detect the whole, and then got the icon part area.
+# based on the kara tempalte to detect the whole, and then got the icon part area.
 
 model = YOLO(WATER_MARK_DETECT_YOLO_WEIGHTS)
 model.eval()

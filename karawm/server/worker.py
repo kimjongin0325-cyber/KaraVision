@@ -17,14 +17,14 @@ from karawm.server.schemas import Status, WMRemoveResults
 class WMRemoveTaskWorker:
     def __init__(self) -> None:
         self.queue = Queue()
-        self.sora_wm = None
+        self.kara_wm = None
         self.output_dir = WORKING_DIR
         self.upload_dir = WORKING_DIR / "uploads"
         self.upload_dir.mkdir(exist_ok=True, parents=True)
 
     async def initialize(self):
         logger.info("Initializing karawm models...")
-        self.sora_wm = karawm()
+        self.kara_wm = karawm()
         logger.info("karawm models initialized")
 
     async def create_task(self) -> str:
@@ -88,7 +88,7 @@ class WMRemoveTaskWorker:
                     )
 
                 await asyncio.to_thread(
-                    self.sora_wm.run, video_path, output_path, progress_callback
+                    self.kara_wm.run, video_path, output_path, progress_callback
                 )
 
                 async with get_session() as session:
