@@ -326,8 +326,4 @@ if __name__ == "__main__":
         print(f"[OK] 可视化视频已保存: {out_path}")
 
     cv2.destroyAllWindows()
-# 실행 시 자동 확인
-ensure_model_files()
 
-# 기존 코드 호환성
-DEFAULT_WATERMARK_REMOVE_MODEL = "lama"
