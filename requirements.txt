@@ -1,0 +1,21 @@
+# Core
+torch
+torchvision
+torchaudio
+
+# Detection (YOLO)
+ultralytics
+
+# Cleaning / Inpainting
+opencv-python
+numpy
+scipy
+einops
+omegaconf
+pytorch-lightning
+kornia
+
+# Utility
+loguru
+tqdm
+requests
