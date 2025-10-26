@@ -59,7 +59,7 @@ class PaintByExample(DiffusionInpaintModel):
             example_image=PIL.Image.fromarray(example_image),
             num_inference_steps=config.sd_steps,
             guidance_scale=config.sd_guidance_scale,
-            negative_prompt="out of frame, lowres, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, disfigured, gross proportions, malformed limbs, watermark, signature",
+            negative_prompt="out of frame, lowres, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, disfigured, gross proportions, malformed limbs, karamk, signature",
             output_type="np.array",
             generator=torch.manual_seed(config.sd_seed),
         ).images[0]

@@ -1,10 +1,10 @@
 from pathlib import Path
 import argparse
 import cv2
-from karawm.watermark_cleaner import WaterMarkCleaner
+from karawm.karamk_cleaner import KaramkCleaner
 
 def main(input_path, output_path):
-    cleaner = WaterMarkCleaner()
+    cleaner = KaramkCleaner()
 
     cap = cv2.VideoCapture(str(input_path))
     assert cap.isOpened(), f"입력 영상 열기 실패: {input_path}"

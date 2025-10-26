@@ -7,14 +7,14 @@ from loguru import logger
 from tqdm import tqdm
 
 from karawm.utils.video_utils import VideoLoader
-from karawm.watermark_cleaner import WaterMarkCleaner
-from karawm.watermark_detector import SoraWaterMarkDetector
+from karawm.karamk_cleaner import KaramkCleaner
+from karawm.karamk_detector import KaramkDetector
 
 
 class karawm:
     def __init__(self):
-        self.detector = SoraWaterMarkDetector()
-        self.cleaner = WaterMarkCleaner()
+        self.detector = KaramkDetector()
+        self.cleaner = KaramkCleaner()
 
     def run(
         self,
@@ -52,7 +52,7 @@ class karawm:
             f"total frames: {total_frames}, fps: {fps}, width: {width}, height: {height}"
         )
         for idx, frame in enumerate(
-            tqdm(input_video_loader, total=total_frames, desc="Detect watermarks")
+            tqdm(input_video_loader, total=total_frames, desc="Detect karamks")
         ):
             detection_result = self.detector.detect(frame)
             if detection_result["detected"]:
@@ -78,7 +78,7 @@ class karawm:
             elif after_box:
                 frame_and_mask[missed_idx]["bbox"] = after_box
 
-        for idx in tqdm(range(total_frames), desc="Remove watermarks"):
+        for idx in tqdm(range(total_frames), desc="Remove karamks"):
             frame_info = frame_and_mask[idx]
             frame = frame_info["frame"]
             bbox = frame_info["bbox"]
@@ -128,7 +128,7 @@ class karawm:
         )
         # Clean up temporary file
         temp_output_path.unlink()
-        logger.info(f"Saved no watermark video with audio at: {output_video_path}")
+        logger.info(f"Saved no karamk video with audio at: {output_video_path}")
 
 
 if __name__ == "__main__":
@@ -137,6 +137,6 @@ if __name__ == "__main__":
     input_video_path = Path(
         "resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4"
     )
-    output_video_path = Path("outputs/sora_watermark_removed.mp4")
+    output_video_path = Path("outputs/sora_karamk_removed.mp4")
     sora_wm = karawm()
     sora_wm.run(input_video_path, output_video_path)
