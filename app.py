@@ -9,11 +9,11 @@ from karawm.core import karawm
 
 def main():
     st.set_page_config(
-        page_title="Sora Karamk Cleaner", page_icon="🎬", layout="centered"
+        page_title="Kara Karamk Cleaner", page_icon="🎬", layout="centered"
     )
 
-    st.title("🎬 Sora Karamk Cleaner")
-    st.markdown("Remove karamks from Sora-generated videos with ease")
+    st.title("🎬 Kara Karamk Cleaner")
+    st.markdown("Remove karamks from Kara-generated videos with ease")
 
     # Initialize karawm
     if "kara_wm" not in st.session_state:

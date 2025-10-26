@@ -76,7 +76,7 @@ if __name__ == "__main__":
     video_path = Path("resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4")
     save_video = True
     out_path = Path("outputs/kara_karamk_yolo_detected.mp4")
-    window = "Sora Karamk YOLO Detection"
+    window = "Kara Karamk YOLO Detection"
     # =======================
 
     # 初始化检测器
