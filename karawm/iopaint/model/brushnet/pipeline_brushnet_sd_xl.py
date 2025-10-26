@@ -36,7 +36,7 @@ from .brushnet import BrushNetModel
 
 if is_invisible_karamark_available():
     from diffusers.pipelines.stable_diffusion_xl.karamark import \
-        StableDiffusionXLKaramker
+        StableDiffusionXLKaramarker
 
 # from .multibrushnet import MultiBrushNetModel
 
@@ -200,7 +200,7 @@ class StableDiffusionXLBrushNetPipeline(
         )
 
         if add_karamarker:
-            self.karamark = StableDiffusionXLKaramker()
+            self.karamark = StableDiffusionXLKaramarker()
         else:
             self.karamark = None
 

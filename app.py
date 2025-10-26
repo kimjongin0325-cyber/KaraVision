@@ -9,10 +9,10 @@ from karawm.core import karawm
 
 def main():
     st.set_page_config(
-        page_title="Kara Karamk Cleaner", page_icon="🎬", layout="centered"
+        page_title="Kara Karamark Cleaner", page_icon="🎬", layout="centered"
     )
 
-    st.title("🎬 Kara Karamk Cleaner")
+    st.title("🎬 Kara Karamark Cleaner")
     st.markdown("Remove karamarks from Kara-generated videos with ease")
 
     # Initialize karawm
@@ -35,7 +35,7 @@ def main():
         st.video(uploaded_file)
 
         # Process button
-        if st.button("🚀 Remove Karamk", type="primary", use_container_width=True):
+        if st.button("🚀 Remove Karamark", type="primary", use_container_width=True):
             with tempfile.TemporaryDirectory() as tmp_dir:
                 tmp_path = Path(tmp_dir)
 
@@ -70,7 +70,7 @@ def main():
                     progress_bar.progress(100)
                     status_text.text("✅ Processing complete!")
 
-                    st.success("✅ Karamk removed successfully!")
+                    st.success("✅ Karamark removed successfully!")
 
                     # Display result
                     st.markdown("### Result")
@@ -95,7 +95,7 @@ def main():
         """
         <div style='text-align: center'>
             <p>Built with ❤️ using Streamlit and AI</p>
-            <p><a href='https://github.com/linkedlist771/KaramkCleaner'>GitHub Repository</a></p>
+            <p><a href='https://github.com/linkedlist771/KaramarkCleaner'>GitHub Repository</a></p>
         </div>
         """,
         unsafe_allow_html=True,

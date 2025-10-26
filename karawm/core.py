@@ -7,14 +7,14 @@ from loguru import logger
 from tqdm import tqdm
 
 from karawm.utils.video_utils import VideoLoader
-from karawm.karamark_cleaner import KaramkCleaner
-from karawm.karamark_detector import KaramkDetector
+from karawm.karamark_cleaner import KaramarkCleaner
+from karawm.karamark_detector import KaramarkDetector
 
 
 class karawm:
     def __init__(self):
-        self.detector = KaramkDetector()
-        self.cleaner = KaramkCleaner()
+        self.detector = KaramarkDetector()
+        self.cleaner = KaramarkCleaner()
 
     def run(
         self,

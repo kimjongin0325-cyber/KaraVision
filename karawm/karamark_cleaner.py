@@ -5,13 +5,13 @@ import numpy as np
 import torch
 from loguru import logger
 
-from karawm.configs import DEFAULT_KARAMK_REMOVE_MODEL
+from karawm.configs import DEFAULT_KARAMARK_REMOVE_MODEL
 from karawm.iopaint.const import DEFAULT_MODEL_DIR
 from karawm.iopaint.download import scan_models
 from karawm.iopaint.model_manager import ModelManager
 from karawm.iopaint.schema import InpaintRequest
 
-from karawm.karamk_detector import KaramkDetector
+from karawm.karamark_detector import KaramarkDetector
 
 
 class _SimpleTracker:
@@ -157,12 +157,12 @@ def _bbox_to_mask(h: int, w: int,
     return mask
 
 
-class KaramkCleaner:
+class KaramarkCleaner:
     def __init__(self, yolo_conf: float = 0.10,
                  feather: int = 14,
                  device: str | None = None):
 
-        self.model_name = DEFAULT_KARAMK_REMOVE_MODEL
+        self.model_name = DEFAULT_KARAMARK_REMOVE_MODEL
         self.device = torch.device(device) if device else \
             torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -174,14 +174,14 @@ class KaramkCleaner:
                                           device=self.device)
         self.inpaint_req = InpaintRequest()
 
-        self.detector = KaramkDetector(conf_thres=yolo_conf)
+        self.detector = KaramarkDetector(conf_thres=yolo_conf)
         self.tracker = _SimpleTracker()
         self.fallback = _ShapeFallback()
         self.feather = feather
 
     def clean(self, input_image: np.ndarray,
-              karamk_mask: np.ndarray) -> np.ndarray:
-        result = self.model_manager(input_image, karamk_mask,
+              karamark_mask: np.ndarray) -> np.ndarray:
+        result = self.model_manager(input_image, karamark_mask,
                                    self.inpaint_req)
         return cv2.cvtColor(result, cv2.COLOR_BGR2RGB)
 

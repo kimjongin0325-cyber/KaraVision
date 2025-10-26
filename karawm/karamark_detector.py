@@ -10,7 +10,7 @@ from karawm.utils.video_utils import VideoLoader
 
 # based on the kara tempalte to detect the whole, and then got the icon part area.
 
-class KaramkDetector:
+class KaramarkDetector:
     def __init__(self, conf=0.25, iou=0.45, device=None):
         download_detector_weights()
         logger.debug("Begin to load yolo kara mark detet model.")
@@ -75,12 +75,12 @@ if __name__ == "__main__":
     # video_path = Path("resources/puppies.mp4") # 19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4
     video_path = Path("resources/19700121_1645_68e0a027836c8191a50bea3717ea7485.mp4")
     save_video = True
-    out_path = Path("outputs/kara_karamk_yolo_detected.mp4")
-    window = "Kara Karamk YOLO Detection"
+    out_path = Path("outputs/kara_karamark_yolo_detected.mp4")
+    window = "Kara Karamark YOLO Detection"
     # =======================
 
     # 初始化检测器
-    detector = KaramkDetector()
+    detector = KaramarkDetector()
 
     # 初始化视频加载器
     video_loader = VideoLoader(video_path)
@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
             # 显示置信度
             conf = detection_result["confidence"]
-            label = f"Karamk: {conf:.2f}"
+            label = f"Karamark: {conf:.2f}"
 
             # 文本背景
             (text_w, text_h), baseline = cv2.getTextSize(
@@ -146,7 +146,7 @@ if __name__ == "__main__":
             status = f"Frame {frame_idx} | DETECTED | Conf: {conf:.3f}"
             status_color = (0, 255, 0)
         else:
-            status = f"Frame {frame_idx} | NO KARAMK"
+            status = f"Frame {frame_idx} | NO KARAMARK"
             status_color = (0, 0, 255)
 
         # 显示帧信息
