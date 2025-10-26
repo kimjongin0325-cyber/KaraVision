@@ -1,10 +1,10 @@
 from pathlib import Path
 import argparse
 import cv2
-from karawm.karamark_cleaner import KaraMarkCleaner  # ✅ watermark_cleaner → karamark_cleaner
+from karawm.karamark_cleaner import KaramarkCleaner  # ✅ 정확한 클래스명
 
 def main(input_path, output_path):
-    cleaner = KaraMarkCleaner()  # ✅ WaterMarkCleaner → KaraMarkCleaner
+    cleaner = KaramarkCleaner()  # ✅ 인스턴스 생성도 일치
 
     cap = cv2.VideoCapture(str(input_path))
     assert cap.isOpened(), f"입력 영상 열기 실패: {input_path}"
@@ -13,7 +13,7 @@ def main(input_path, output_path):
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    # ✅ Colab에서 안정적인 MJPG + AVI 조합
+    # ✅ Colab 권장 코덱 설정
     fourcc = cv2.VideoWriter_fourcc(*"MJPG")
     writer = cv2.VideoWriter(str(output_path), fourcc, fps, (w, h))
 
@@ -28,8 +28,6 @@ def main(input_path, output_path):
         result = cleaner.clean_frame(frame)
         writer.write(result)
         frame_idx += 1
-
-        # ✅ Colab은 GUI 미지원 → imshow 제거
 
     writer.release()
     cap.release()
