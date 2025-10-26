@@ -174,7 +174,7 @@ class WaterMarkCleaner:
                                           device=self.device)
         self.inpaint_req = InpaintRequest()
 
-        self.detector = SoraWaterMarkDetector(conf_thresh=yolo_conf)
+        self.detector = SoraWaterMarkDetector(conf_thres=yolo_conf)
         self.tracker = _SimpleTracker()
         self.fallback = _ShapeFallback()
         self.feather = feather
