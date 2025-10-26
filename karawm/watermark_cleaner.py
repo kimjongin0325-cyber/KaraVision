@@ -21,7 +21,7 @@ from karawm.watermark_detector import SoraWaterMarkDetector  # noqa: E402
 # =========================================================
 class _SimpleTracker:
     """IoU 체크 + EMA 스무딩"""
-    def __init__(self, alpha: float = 0.6, iou_keep: float = 0.10):
+    def __init__(self, alpha: float = 0.75, iou_keep: float = 0.05):
         self.alpha = alpha
         self.iou_keep = iou_keep
         self.prev: tuple[int,int,int,int] | None = None
@@ -190,7 +190,7 @@ class WaterMarkCleaner:
           * clean(input_image, watermark_mask)  # 호환용
           * clean_frame(frame_bgr)              # 영상 프레임 처리(권장)
     """
-    def __init__(self, yolo_conf: float = 0.25, feather: int = 8, device: str | None = None):
+    def __init__(self, yolo_conf: float = 0.10, feather: int = 14, device: str | None = None):
         # LaMa 모델 준비 (기존 방식 재사용)
         self.model_name = DEFAULT_WATERMARK_REMOVE_MODEL
         self.device = torch.device(device) if device else torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -228,6 +228,10 @@ class WaterMarkCleaner:
         smooth_box = self.tracker.update(pick)
 
         # 4) 마스크 생성 + 인페인트
-        mask = _bbox_to_mask(H, W, smooth_box, feather=self.feather)
-        inpainted = self.model_manager(frame_bgr, mask, self.inpaint_req)
-        return cv2.cvtColor(inpainted, cv2.COLOR_BGR2RGB)
+       if smooth_box is None:
+    # YOLO / Fallback / Tracker 모두 실패 → 원본 사용
+       return frame_bgr
+
+       mask = _bbox_to_mask(H, W, smooth_box, feather=self.feather)
+       inpainted = self.model_manager(frame_bgr, mask, self.inpaint_req)
+       return cv2.cvtColor(inpainted, cv2.COLOR_BGR2RGB)
