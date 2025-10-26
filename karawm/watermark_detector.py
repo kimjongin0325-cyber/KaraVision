@@ -10,13 +10,27 @@ from karawm.utils.video_utils import VideoLoader
 
 # based on the sora tempalte to detect the whole, and then got the icon part area.
 
-
 class SoraWaterMarkDetector:
-    def __init__(self):
+    def __init__(self, conf=0.25, iou=0.45, device=None):
         download_detector_weights()
-        logger.debug(f"Begin to load yolo water mark detet model.")
+        logger.debug("Begin to load yolo water mark detet model.")
+        
         self.model = YOLO(WATER_MARK_DETECT_YOLO_WEIGHTS)
-        logger.debug(f"Yolo water mark detet model loaded.")
+        logger.debug("Yolo water mark detet model loaded.")
+
+        # ✅ Confidence & IoU 설정
+        self.model.conf = conf
+        self.model.iou = iou
+
+        # ✅ 모델 장치 선택 (GPU 우선)
+        if device is None:
+            self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        else:
+            self.device = device
+
+        self.model.to(self.device)
+        logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={self.device}")
+
 
         self.model.eval()
 
