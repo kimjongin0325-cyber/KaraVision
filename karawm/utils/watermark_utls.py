@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 
-from karawm.configs import WATER_MARK_TEMPLATE_IMAGE_PATH
+from karawm.configs import KARA_MARK_TEMPLATE_IMAGE_PATH
 
-tmpl = cv2.imread(WATER_MARK_TEMPLATE_IMAGE_PATH)
+tmpl = cv2.imread(KARA_MARK_TEMPLATE_IMAGE_PATH)
 tmpl_gray = cv2.cvtColor(tmpl, cv2.COLOR_BGR2GRAY)
 h_tmpl, w_tmpl = tmpl_gray.shape
 

@@ -4,7 +4,7 @@ import numpy as np
 from loguru import logger
 from ultralytics import YOLO
 
-from karawm.configs import WATER_MARK_DETECT_YOLO_WEIGHTS
+from karawm.configs import KARA_MARK_DETECT_YOLO_WEIGHTS
 from karawm.utils.download_utils import download_detector_weights
 from karawm.utils.video_utils import VideoLoader
 
@@ -15,7 +15,7 @@ class KaramkDetector:
         download_detector_weights()
         logger.debug("Begin to load yolo kara mark detet model.")
         
-        self.model = YOLO(WATER_MARK_DETECT_YOLO_WEIGHTS)
+        self.model = YOLO(KARA_MARK_DETECT_YOLO_WEIGHTS)
         logger.debug("Yolo kara mark detet model loaded.")
 
         # ✅ Confidence & IoU 설정

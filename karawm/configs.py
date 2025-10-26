@@ -8,7 +8,7 @@ MODEL_DIR = ROOT / "resources"
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
 # YOLO 워터마크 탐지 모델 (best.pt)
-WATER_MARK_DETECT_YOLO_WEIGHTS = MODEL_DIR / "best.pt"
+KARA_MARK_DETECT_YOLO_WEIGHTS = MODEL_DIR / "best.pt"
 
 # LaMa 인페인팅 모델 (big-lama.pt)
 LAMA_WEIGHTS_PATH = Path.home() / ".cache" / "torch" / "hub" / "checkpoints" / "big-lama.pt"
@@ -24,11 +24,11 @@ def ensure_model_files():
     import requests
 
     # YOLO 모델 다운로드
-    if not WATER_MARK_DETECT_YOLO_WEIGHTS.exists():
+    if not KARA_MARK_DETECT_YOLO_WEIGHTS.exists():
         print(f"📥 Downloading best.pt from GitHub...")
         with requests.get(MODEL_URLS["best.pt"], stream=True) as r:
             r.raise_for_status()
-            with open(WATER_MARK_DETECT_YOLO_WEIGHTS, "wb") as f:
+            with open(KARA_MARK_DETECT_YOLO_WEIGHTS, "wb") as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
         print("✅ best.pt downloaded.")
