@@ -28,6 +28,4 @@ class KaramarkCleaner:
         mask[y1:y2, x1:x2] = 255  # ✅ bounding box 영역만 덮기
 
         # ✅ 인페인트 실행
-        result = self.inpainter(frame_rgb, mask)
-
-        return result[:, :, ::-1]  # RGB → BGR
+      
