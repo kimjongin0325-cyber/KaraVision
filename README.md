@@ -3,6 +3,7 @@
 🚀 Fast | ✅ Accurate | 🎬 Multi-logo | 🧠 Auto-Tracking  
 KaraVision is an AI-powered watermark removal system for video.
 
+(For demo, see the example video processing script.)
 
 ---
 
