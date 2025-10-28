@@ -21,50 +21,45 @@ class KaramarkCleaner:
 
         dets = self.detector.detect(frame_bgr)
 
-        # ✅ Detection 없으면 원본 유지
-        if not dets:
-            return frame_bgr
+# ✅ Detection 없으면 원본 유지
+if not dets:
+    return frame_bgr
 
-        # ✅ 가장 높은 confidence 사용
-        dets.sort(key=lambda d: d[4], reverse=True)
-        x1, y1, x2, y2, conf, cls = dets[0]
-        x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+# ✅ Multi-logo support
+dets.sort(key=lambda d: d[4], reverse=True)
 
-        # ✅ 분류기: 진짜 로고인지 확인
-        crop = frame_rgb[y1:y2, x1:x2]
-        if crop.size == 0:
-            return frame_bgr
+result = frame_rgb.copy()  # 여러 번 inpaint 적용 대비
 
-        crop_resized = cv2.resize(crop, (64, 64))
-        crop_flat = crop_resized.flatten().reshape(1, -1)
-        pred = self.classifier.predict_proba(crop_flat)[0][1]
+for det in dets:
+    x1, y1, x2, y2, conf, cls = det
+    x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
 
-        if pred < 0.5:
-            logger.debug(f"❌ Not a logo: pred={pred:.2f}")
-            return frame_bgr
-        logger.debug(f"✅ Logo detected: pred={pred:.2f}")
+    # ✅ 범위 검증
+    if x2 <= x1 or y2 <= y1:
+        continue
 
-        # ✅ 주변까지 넓게 제거 (품질 향상)
-        pad = 10
-        x1, y1 = max(0, x1 - pad), max(0, y1 - pad)
-        x2, y2 = min(frame_w, x2 + pad), min(frame_h, y2 + pad)
+    # ✅ 분류기 체크 (진짜 로고인지 확인)
+    crop = result[y1:y2, x1:x2]
+    if crop.size == 0:
+        continue
 
-        # ✅ mask 생성
-        mask = np.zeros((frame_h, frame_w), dtype=np.uint8)
-        mask[y1:y2, x1:x2] = 255
+    crop_resized = cv2.resize(crop, (64, 64))
+    crop_flat = crop_resized.flatten().reshape(1, -1)
+    pred = self.classifier.predict_proba(crop_flat)[0][1]
 
-        # ✅ Inpaint 실행
-        result_rgb = self.inpainter(frame_rgb, mask)
+    if pred < 0.5:
+        logger.debug(f"❌ Not a logo: pred={pred:.2f}")
+        continue
 
-        # ✅ Tensor → NumPy
-        if isinstance(result_rgb, torch.Tensor):
-            result_rgb = result_rgb.cpu().numpy()
+    # ✅ 주변까지 넓게 제거 (품질↑)
+    pad = 10
+    x1p, y1p = max(0, x1 - pad), max(0, y1 - pad)
+    x2p, y2p = min(frame_w, x2 + pad), min(frame_h, y2 + pad)
 
-        # ✅ 채널 보정
-        if result_rgb.ndim == 2:
-            result_rgb = np.stack([result_rgb] * 3, axis=-1)
-        elif result_rgb.shape[2] == 1:
-            result_rgb = np.repeat(result_rgb, 3, axis=2)
+    mask = np.zeros((frame_h, frame_w), dtype=np.uint8)
+    mask[y1p:y2p, x1p:x2p] = 255
 
-        # ✅ 최종 BGR 반환
-        return result_rgb[:, :, ::-1]
+    result = self.inpainter(result, mask)
+
+# ✅ 최종 BGR
+return result[:, :, ::-1]
