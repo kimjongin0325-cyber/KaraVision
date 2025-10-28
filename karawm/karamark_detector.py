@@ -1,39 +1,40 @@
-from pathlib import Path
-
-import numpy as np
-import torch
 from loguru import logger
+import torch
+import numpy as np
 from ultralytics import YOLO
 from ultralytics.nn.tasks import DetectionModel
 
 
 class KaramarkDetector:
-    def __init__(self, conf=0.25, iou=0.45, device=None):
+    def __init__(self, conf=0.1, iou=0.45, device="cuda"):
         logger.debug("Begin to load yolo detect model.")
 
-        import torch.serialization
-        # ✅ PyTorch 2.6 안전모드에서 YOLO 모델 허용
+        self.conf = conf
+        self.iou = iou
+        self.device = device
+
+        # ✅ safe load override wrapper
         torch.serialization.add_safe_globals([DetectionModel])
         torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
 
-        # ✅ safe load override wrapper
-        def load_yolo_with_force(weights="yolov8n.pt"):
-            try:
-                return YOLO(weights)  # weights_only=True 실패하면 except로
-            except Exception:
-                logger.warning("Safe-load failed. Trying full checkpoint load...")
-                ckpt = torch.load(weights, map_location="cpu", weights_only=False)
-                model = YOLO()
-                model.model = ckpt["model"]
-                return model
+        self.model = YOLO("yolov8n.pt")  # ✅ YOLOv8 lightweight
+        logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={device}")
 
-        # ✅ 강제 로드 적용
-        self.model = load_yolo_with_force("yolov8n.pt")
+    def detect(self, img_bgr):
+        results = self.model(
+            img_bgr,
+            conf=self.conf,
+            iou=self.iou,
+            device=self.device
+        )
 
-        self.model.conf = conf
-        self.model.iou = iou
+        dets = []
+        for r in results:
+            if hasattr(r, "boxes"):
+                for box in r.boxes:
+                    xyxy = box.xyxy[0].tolist()
+                    conf = float(box.conf[0]) if hasattr(box, "conf") else 0.0
+                    cls = int(box.cls[0]) if hasattr(box, "cls") else -1
+                    dets.append([*xyxy, conf, cls])
 
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model.to(self.device)
-        self.model.eval()
-        logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={self.device}")
+        return dets
