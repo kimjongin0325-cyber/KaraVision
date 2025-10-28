@@ -12,10 +12,14 @@ class KaramarkCleaner:
     def __init__(self):
         self.detector = KaramarkDetector()
         self.inpainter = InpaintEngine()
-        self.classifier = joblib.load("resources/logo_classifier.pkl")  # ✅ 로고 분류기
+        self.classifier = joblib.load("resources/logo_classifier.pkl")
+        self.tracked_box = None   # ✅ 추가
+        self.frame_count = 0      # ✅ 추가
         logger.info("✅ KaramarkCleaner ready (Detector + Classifier + Inpainter)")
 
+
     def clean_frame(self, frame_bgr):
+        self.frame_count += 1   # ✅ 추가
         frame_h, frame_w = frame_bgr.shape[:2]
         frame_rgb = frame_bgr[:, :, ::-1].copy()
 
