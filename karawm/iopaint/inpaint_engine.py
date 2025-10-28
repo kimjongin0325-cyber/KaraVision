@@ -24,4 +24,3 @@ class InpaintEngine:
         result = (result.transpose(1, 2, 0) * 255).clip(0, 255).astype(np.uint8)
 
         return result
-
