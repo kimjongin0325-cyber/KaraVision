@@ -17,7 +17,8 @@ class KaramarkDetector:
         torch.serialization.add_safe_globals([DetectionModel])
         torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
 
-        self.model = YOLO("yolov8n.pt")  # ✅ YOLOv8 lightweight
+        # ✅ best.ckpt: 로고 특화 탐지 모델
+        self.model = YOLO("resources/best.ckpt")
         logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={device}")
 
     def detect(self, img_bgr):
