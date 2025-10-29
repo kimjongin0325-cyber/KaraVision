@@ -1,13 +1,13 @@
 from loguru import logger
-import torch
 import numpy as np
+import torch
 from ultralytics import YOLO
 from ultralytics.nn.tasks import DetectionModel
 
 
 class KaramarkDetector:
     def __init__(self, conf=0.1, iou=0.45, device="cuda"):
-        logger.debug("Begin to load yolo detect model.")
+        logger.debug("Begin to load YOLOv8m detector.")
 
         self.conf = conf
         self.iou = iou
@@ -17,16 +17,17 @@ class KaramarkDetector:
         torch.serialization.add_safe_globals([DetectionModel])
         torch.serialization.add_safe_globals([torch.nn.modules.container.Sequential])
 
-        # ✅ best.ckpt: 로고 특화 탐지 모델
-        self.model = YOLO("resources/best.ckpt")
-        logger.debug(f"YOLO setup: conf={conf}, iou={iou}, device={device}")
+        # ✅ A라인 전용: YOLOv8m.pt
+        self.model = YOLO("resources/yolov8m.pt")
+        logger.debug(f"YOLOv8m setup: conf={conf}, iou={iou}, device={device}")
 
     def detect(self, img_bgr):
         results = self.model(
             img_bgr,
             conf=self.conf,
             iou=self.iou,
-            device=self.device
+            device=self.device,
+            verbose=False
         )
 
         dets = []
@@ -34,8 +35,8 @@ class KaramarkDetector:
             if hasattr(r, "boxes"):
                 for box in r.boxes:
                     xyxy = box.xyxy[0].tolist()
-                    conf = float(box.conf[0]) if hasattr(box, "conf") else 0.0
-                    cls = int(box.cls[0]) if hasattr(box, "cls") else -1
+                    conf = float(box.conf[0])
+                    cls = int(box.cls[0])
                     dets.append([*xyxy, conf, cls])
 
         return dets
