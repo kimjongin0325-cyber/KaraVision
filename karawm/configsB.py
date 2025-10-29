@@ -1,4 +1,4 @@
-from pathlib import Path
+Afrom pathlib import Path
 
 # 프로젝트 루트 기준 경로
 ROOT = Path(__file__).resolve().parents[1]
