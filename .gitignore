@@ -214,9 +214,9 @@ datasets/labels
 datasets/coco8
 .DS_store
 outputs
-yolo11n.pt
-yolo11s.pt
-best.pt
+# yolo11n.pt
+# yolo11s.pt
+# best.pt
 
 .claude
 best.pt
